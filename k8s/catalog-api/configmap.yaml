@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: catalog-api-config
+data:
+  Jwt__Issuer: "FCG.Users.Api"
+  Jwt__Audience: "FCG.Users.Api"
+  RabbitMQ__Host: "rabbitmq-service"
+  RabbitMQ__Username: "guest"
