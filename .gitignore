@@ -1,0 +1,10 @@
+## .NET
+[Bb]in/
+[Oo]bj/
+*.user
+.vs/
+.idea/
+.DS_Store
+.env
+appsettings.Development.json
+*.db
