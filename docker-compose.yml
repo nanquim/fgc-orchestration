@@ -58,7 +58,7 @@ services:
   users-api:
     image: nanquim/fgc-users-api:latest
     ports:
-      - "5000:8080"
+      - "5010:8080"
     environment:
       - ConnectionStrings__DefaultConnection=Host=users-db;Database=usersdb;Username=postgres;Password=postgres
       - Jwt__Key=CHAVE_SUPER_SECRETA_MIN_32_CHARS!!
