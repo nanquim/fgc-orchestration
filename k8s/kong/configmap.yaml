@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kong-config
+data:
+  kong.yml: |
+    _format_version: "3.0"
+    _transform: true
+
+    consumers:
+      - username: fcg-app
+        jwt_secrets:
+          - key: FCG.Users.Api
+            algorithm: HS256
+            secret: CHAVE_SUPER_SECRETA_MIN_32_CHARS!!
+
+    services:
+
+      - name: users-service
+        url: http://users-api-service:80
+        routes:
+          - name: users-register
+            paths:
+              - /users
+            methods:
+              - POST
+            strip_path: false
+
+          - name: users-auth
+            paths:
+              - /auth
+            methods:
+              - POST
+            strip_path: false
+
+      - name: catalog-service
+        url: http://catalog-api-service:80
+        plugins:
+          - name: jwt
+            config:
+              claims_to_verify:
+                - exp
+              key_claim_name: iss
+        routes:
+          - name: catalog-routes
+            paths:
+              - /games
+            strip_path: false

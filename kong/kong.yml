@@ -1,0 +1,48 @@
+_format_version: "3.0"
+_transform: true
+
+# ─── Consumers ────────────────────────────────────────────────────────────────
+# O consumer "fcg-app" representa qualquer cliente que apresente um JWT válido
+# emitido pela UsersAPI. A chave "key" deve corresponder ao claim "iss" do token.
+consumers:
+  - username: fcg-app
+    jwt_secrets:
+      - key: FCG.Users.Api
+        algorithm: HS256
+        secret: CHAVE_SUPER_SECRETA_MIN_32_CHARS!!
+
+# ─── Services & Routes ────────────────────────────────────────────────────────
+services:
+
+  # UsersAPI — rotas públicas (registro e autenticação não exigem JWT)
+  - name: users-service
+    url: http://users-api:8080
+    routes:
+      - name: users-register
+        paths:
+          - /users
+        methods:
+          - POST
+        strip_path: false
+
+      - name: users-auth
+        paths:
+          - /auth
+        methods:
+          - POST
+        strip_path: false
+
+  # CatalogAPI — todas as rotas exigem JWT válido
+  - name: catalog-service
+    url: http://catalog-api:8080
+    plugins:
+      - name: jwt
+        config:
+          claims_to_verify:
+            - exp
+          key_claim_name: iss
+    routes:
+      - name: catalog-routes
+        paths:
+          - /games
+        strip_path: false
