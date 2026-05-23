@@ -78,6 +78,18 @@ services:
       timeout: 5s
       retries: 5
 
+  mongodb:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   # ─── Microsserviços ───────────────────────────────────────────────────────
   users-api:
     image: nanquim/fgc-users-api:latest
@@ -152,3 +164,4 @@ volumes:
   users-db-data:
   catalog-db-data:
   payments-db-data:
+  mongodb-data:
