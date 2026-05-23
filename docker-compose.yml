@@ -160,10 +160,17 @@ services:
       - RabbitMQ__Host=rabbitmq
       - RabbitMQ__Username=guest
       - RabbitMQ__Password=guest
+      - MongoDB__ConnectionString=mongodb://mongodb:27017
+      - MongoDB__DatabaseName=fcg
+      - Redis__ConnectionString=redis:6379
     depends_on:
       catalog-db:
         condition: service_healthy
       rabbitmq:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
   payments-api:
