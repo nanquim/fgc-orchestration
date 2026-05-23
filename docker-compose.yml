@@ -192,17 +192,9 @@ services:
       rabbitmq:
         condition: service_healthy
 
-  notifications-api:
-    image: nanquim/fgc-notifications-api:latest
-    ports:
-      - "5003:8080"
-    environment:
-      - RabbitMQ__Host=rabbitmq
-      - RabbitMQ__Username=guest
-      - RabbitMQ__Password=guest
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
+  # notifications-api foi substituída pela Azure Function (fgc-notifications-function).
+  # Para desenvolvimento local, execute: func start (dentro de fgc-notifications-function)
+  # com RabbitMQConnectionString apontando para amqp://guest:guest@localhost:5672
 
 volumes:
   users-db-data:
