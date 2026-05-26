@@ -12,7 +12,7 @@ graph TD
     Cliente --> Kong["Kong API Gateway\n:8000"]
 
     Kong -->|POST /users, /auth| Users["UsersAPI\n:5010"]
-    Kong -->|/games (JWT)| Catalog["CatalogAPI\n:5001"]
+    Kong -->|"/games (JWT)"| Catalog["CatalogAPI\n:5001"]
 
     Users -->|UserCreatedEvent| RabbitMQ
     Catalog -->|OrderPlacedEvent| Payments["PaymentsAPI\n:5002"]
